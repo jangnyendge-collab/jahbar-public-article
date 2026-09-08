@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我不是来吵架的</title>
+<style>
+  /* ===== 基础重置 ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --jahbar-red: #C41E3A;
+    --jahbar-yellow: #F5C518;
+    --jahbar-green: #00875A;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --text-muted: #888;
+    --bg-page: #f5f5f3;
+    --bg-card: #ffffff;
+    --border-light: #e8e8e6;
+    --placeholder-bg: #FFF8DC;
+    --placeholder-border: #F5C518;
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    line-height: 1.8;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ===== 页面容器 ===== */
+  .page-wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    background-color: var(--bg-card);
+    min-height: 100vh;
+    box-shadow: 0 0 40px rgba(0,0,0,0.06);
+  }
+
+  /* ===== 顶部品牌条 ===== */
+  .brand-bar {
+    height: 6px;
+    background: linear-gradient(90deg, var(--jahbar-red) 0%, var(--jahbar-red) 33.33%, var(--jahbar-yellow) 33.33%, var(--jahbar-yellow) 66.66%, var(--jahbar-green) 66.66%, var(--jahbar-green) 100%);
+  }
+
+  /* ===== 文章主体 ===== */
+  .article-body {
+    padding: 48px 36px 40px;
+  }
+
+  @media (max-width: 600px) {
+    .article-body { padding: 32px 20px 32px; }
+  }
+
+  /* ===== 主标题 ===== */
+  .article-title {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.4;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .title-accent {
+    display: block;
+    width: 50px;
+    height: 4px;
+    background: var(--jahbar-red);
+    margin: 18px auto 0;
+    border-radius: 2px;
+  }
+
+  /* ===== 章节标题 ===== */
+  .section-title {
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 48px;
+    margin-bottom: 20px;
+    padding-left: 14px;
+    border-left: 4px solid var(--jahbar-red);
+    line-height: 1.4;
+  }
+
+  .subsection-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 32px;
+    margin-bottom: 14px;
+    padding-left: 12px;
+    border-left: 3px solid var(--jahbar-yellow);
+    line-height: 1.4;
+  }
+
+  /* ===== 正文段落 ===== */
+  .article-body p {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--text-primary);
+    margin-bottom: 18px;
+    text-align: justify;
+  }
+
+  .article-body p strong {
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  /* ===== 写在最前面 特殊样式 ===== */
+  .preface {
+    margin-top: 32px;
+    margin-bottom: 36px;
+    padding: 28px 26px;
+    background: linear-gradient(135deg, #fafaf8 0%, #f5f5f3 100%);
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+  }
+
+  .preface p {
+    font-size: 16px;
+    line-height: 1.9;
+    margin-bottom: 12px;
+  }
+  .preface p:last-child { margin-bottom: 0; }
+
+  .preface .negation {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .preface .stand-line {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border-light);
+    font-size: 14.5px;
+    color: var(--text-muted);
+  }
+
+  /* ===== 选择题卡片 ===== */
+  .quiz-intro {
+    background: #fefcf3;
+    border: 1px solid #f0e6c8;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 20px 0 28px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+  }
+
+  .quiz-card {
+    background: #ffffff;
+    border: 2px solid var(--border-light);
+    border-radius: 14px;
+    padding: 26px 24px;
+    margin: 28px 0;
+    box-shadow: 0 3px 16px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s;
+  }
+
+  .quiz-card:hover {
+    box-shadow: 0 5px 24px rgba(0,0,0,0.08);
+  }
+
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .quiz-num {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--jahbar-red), #e03a52);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+  }
+
+  .quiz-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+
+  .quiz-scenario {
+    background: #f8f8f6;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    border-left: 3px solid var(--jahbar-yellow);
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .quiz-option {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 16px;
+    background: #fafaf8;
+    border: 1.5px solid var(--border-light);
+    border-radius: 8px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .quiz-option:hover {
+    background: #f5f0e8;
+    border-color: var(--jahbar-yellow);
+    transform: translateX(3px);
+  }
+
+  .quiz-option .opt-letter {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background: var(--jahbar-green);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    margin-top: 1px;
+  }
+
+  .quiz-hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .quiz-reveal {
+    background: #f0f7f4;
+    border-radius: 8px;
+    padding: 16px 18px;
+    border: 1px solid #d4e8dc;
+  }
+
+  .quiz-reveal-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--jahbar-green);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .quiz-reveal-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .quiz-reveal-item:last-child { margin-bottom: 0; }
+
+  .quiz-reveal-item .reveal-letter {
+    flex-shrink: 0;
+    font-weight: 700;
+    color: var(--jahbar-red);
+    margin-right: 6px;
+    min-width: 20px;
+  }
+
+  .quiz-reveal-item .reveal-emoji {
+    margin-right: 4px;
+  }
+
+  .quiz-reveal-item .reveal-name {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-right: 4px;
+  }
+
+  .quiz-footer-note {
+    margin-top: 28px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #fef5f5 0%, #fdf0f0 100%);
+    border-radius: 10px;
+    border-left: 4px solid var(--jahbar-red);
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+  }
+
+  .quiz-footer-note strong {
+    color: var(--jahbar-red);
+  }
+
+  /* ===== 时间轴 ===== */
+  .timeline-container {
+    position: relative;
+    margin: 24px 0;
+    padding-left: 28px;
+  }
+
+  .timeline-container::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--jahbar-red) 0%, var(--jahbar-yellow) 50%, var(--jahbar-green) 100%);
+    border-radius: 1px;
+  }
+
+  .timeline-phase {
+    margin-bottom: 28px;
+  }
+  .timeline-phase:last-child { margin-bottom: 0; }
+
+  .timeline-phase-title {
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--jahbar-red);
+    margin-bottom: 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px dashed var(--border-light);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 14px;
+    padding-left: 8px;
+  }
+
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -24px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2.5px solid var(--jahbar-yellow);
+    z-index: 1;
+  }
+
+  .timeline-item.important::before {
+    border-color: var(--jahbar-red);
+    background: var(--jahbar-red);
+    width: 12px;
+    height: 12px;
+    left: -25px;
+  }
+
+  .timeline-item.resolved::before {
+    border-color: var(--jahbar-green);
+    background: var(--jahbar-green);
+  }
+
+  .timeline-time {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--jahbar-red);
+    margin-bottom: 2px;
+    font-family: "SF Mono", "Menlo", monospace;
+  }
+
+  .timeline-content {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .timeline-content strong {
+    color: var(--text-primary);
+  }
+
+  .timeline-quote {
+    background: #f8f8f6;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 4px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    border-left: 3px solid var(--jahbar-green);
+    font-style: italic;
+  }
+
+  .timeline-summary {
+    margin-top: 18px;
+    padding: 14px 18px;
+    background: #f0f7f4;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--jahbar-green);
+    font-weight: 500;
+    border: 1px solid #d4e8dc;
+  }
+
+  /* ===== 被删掉的原话 特殊样式 ===== */
+  .deleted-quotes {
+    margin: 20px 0;
+  }
+
+  .deleted-quote-item {
+    display: flex;
+    margin-bottom: 12px;
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+
+  .deleted-quote-item .status {
+    flex-shrink: 0;
+    width: 60px;
+    font-weight: 700;
+    font-size: 12px;
+    padding-top: 2px;
+  }
+
+  .deleted-quote-item .status.kept {
+    color: var(--jahbar-red);
+  }
+
+  .deleted-quote-item .status.deleted {
+    color: var(--text-muted);
+    text-decoration: line-through;
+  }
+
+  .deleted-quote-item .quote-text {
+    flex: 1;
+    color: var(--text-secondary);
+  }
+
+  .deleted-quote-item .quote-text.kept-text {
+    color: var(--jahbar-red);
+    font-weight: 600;
+  }
+
+  /* ===== 概念区分块 ===== */
+  .concept-block {
+    background: #fafaf8;
+    border-left: 3px solid var(--jahbar-green);
+    padding: 20px 22px;
+    margin: 24px 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .concept-block .concept-item {
+    margin-bottom: 14px;
+  }
+  .concept-block .concept-item:last-child { margin-bottom: 0; }
+
+  .concept-block .concept-label {
+    font-weight: 700;
+    font-size: 15.5px;
+    margin-right: 6px;
+  }
+  .concept-block .concept-label.fact { color: var(--jahbar-red); }
+  .concept-block .concept-label.feeling { color: #b89410; }
+  .concept-block .concept-label.interpret { color: var(--jahbar-green); }
+
+  .concept-block .concept-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+
+  /* ===== 推演表格 ===== */
+  .table-wrapper {
+    margin: 28px 0;
+    overflow-x: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid var(--border-light);
+  }
+
+  .deduction-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+
+  .deduction-table thead th {
+    background: var(--jahbar-red);
+    color: #fff;
+    font-weight: 700;
+    padding: 12px 10px;
+    text-align: left;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    border: none;
+  }
+
+  .deduction-table thead th:nth-child(2) { background: #a81830; }
+  .deduction-table thead th:nth-child(3) { background: var(--jahbar-green); }
+  .deduction-table thead th:nth-child(4) { background: #b89410; }
+
+  .deduction-table tbody td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--border-light);
+    vertical-align: top;
+    color: var(--text-secondary);
+  }
+
+  .deduction-table tbody tr:nth-child(even) {
+    background: #fafaf8;
+  }
+
+  .deduction-table tbody td:first-child {
+    font-weight: 700;
+    color: var(--jahbar-red);
+    white-space: nowrap;
+    font-size: 13px;
+  }
+
+  .deduction-table tbody td:nth-child(3) {
+    color: var(--jahbar-green);
+    font-weight: 500;
+  }
+
+  .table-note {
+    background: #f0f7f4;
+    border-left: 3px solid var(--jahbar-green);
+    padding: 14px 18px;
+    margin: 16px 0 28px;
+    border-radius: 0 6px 6px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+
+  .table-note strong { color: var(--jahbar-green); }
+
+  /* ===== 通用数据表格 ===== */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 20px 0;
+  }
+
+  .data-table thead th {
+    background: var(--jahbar-green);
+    color: #fff;
+    font-weight: 700;
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  .data-table tbody td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  .data-table tbody tr:nth-child(even) {
+    background: #fafaf8;
+  }
+
+  .data-table tbody td:first-child {
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  /* ===== 对比表格（过去现在未来） ===== */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin: 20px 0;
+  }
+
+  .compare-table thead th {
+    padding: 12px 12px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .compare-table thead th:first-child {
+    background: var(--text-muted);
+    width: 80px;
+  }
+  .compare-table thead th:nth-child(2) {
+    background: var(--jahbar-green);
+  }
+  .compare-table thead th:nth-child(3) {
+    background: var(--jahbar-red);
+  }
+
+  .compare-table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    vertical-align: top;
+    font-size: 13.5px;
+  }
+
+  .compare-table tbody tr:nth-child(even) {
+    background: #fafaf8;
+  }
+
+  .compare-table tbody td:first-child {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 13px;
+  }
+
+  /* ===== 五人视角卡片 ===== */
+  .perspective-grid {
+    margin: 24px 0;
+  }
+
+  .perspective-card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    border-left: 4px solid var(--border-light);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  }
+
+  .perspective-card:last-child { margin-bottom: 0; }
+
+  .perspective-card.p-band { border-left-color: var(--jahbar-red); }
+  .perspective-card.p-me { border-left-color: var(--jahbar-yellow); }
+  .perspective-card.p-staff { border-left-color: var(--jahbar-green); }
+  .perspective-card.p-audience { border-left-color: #6a5acd; }
+  .perspective-card.p-comments { border-left-color: #ff6b6b; }
+
+  .perspective-label {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+  }
+
+  .perspective-card.p-band .perspective-label { color: var(--jahbar-red); }
+  .perspective-card.p-me .perspective-label { color: #b89410; }
+  .perspective-card.p-staff .perspective-label { color: var(--jahbar-green); }
+  .perspective-card.p-audience .perspective-label { color: #6a5acd; }
+  .perspective-card.p-comments .perspective-label { color: #ff6b6b; }
+
+  .perspective-label .perspective-icon {
+    margin-right: 6px;
+    font-size: 16px;
+  }
+
+  .perspective-text {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+
+  .perspective-text .feeling-note {
+    display: block;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .psychology-note {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: #f8f5ff;
+    border-radius: 8px;
+    border: 1px solid #e0d8f0;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+
+  .psychology-note strong {
+    color: #6a5acd;
+  }
+
+  /* ===== 女孩做法 列表 ===== */
+  .action-list {
+    list-style: none;
+    margin: 18px 0;
+    padding: 0;
+  }
+
+  .action-list li {
+    position: relative;
+    padding: 10px 0 10px 36px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text-primary);
+    border-bottom: 1px dashed var(--border-light);
+  }
+  .action-list li:last-child { border-bottom: none; }
+
+  .action-list li::before {
+    content: attr(data-num);
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 26px;
+    height: 26px;
+    background: var(--jahbar-green);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .action-list li strong {
+    color: var(--jahbar-green);
+  }
+
+  .could-do-list {
+    list-style: none;
+    margin: 18px 0;
+    padding: 0;
+  }
+
+  .could-do-list li {
+    position: relative;
+    padding: 8px 0 8px 28px;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  .could-do-list li::before {
+    content: "○";
+    position: absolute;
+    left: 4px;
+    top: 8px;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  /* ===== 7条新规则卡片 ===== */
+  .rule-card {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .rule-card:last-child { margin-bottom: 0; }
+
+  .rule-num {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--jahbar-red), #e03a52);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 14px;
+    margin-top: 2px;
+  }
+
+  .rule-content {
+    flex: 1;
+  }
+
+  .rule-title {
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .rule-desc {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+
+  /* ===== 投票卡片 ===== */
+  .vote-card {
+    background: #ffffff;
+    border: 2px solid var(--border-light);
+    border-radius: 14px;
+    padding: 28px 26px;
+    margin: 28px 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  }
+
+  .vote-card-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 2px solid var(--border-light);
+  }
+
+  .vote-icon {
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--jahbar-red), var(--jahbar-yellow));
+    border-radius: 50%;
+    margin-bottom: 12px;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+
+  .vote-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .vote-hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .vote-options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .vote-options li {
+    display: flex;
+    align-items: flex-start;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: #fafaf8;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+
+  .vote-options li:last-child { margin-bottom: 0; }
+
+  .vote-options li:hover {
+    background: #f5f0e8;
+    border-color: var(--jahbar-yellow);
+  }
+
+  .vote-options .option-num {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    background: var(--jahbar-green);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    margin-top: 1px;
+  }
+
+  .vote-warning {
+    margin-top: 20px;
+    padding: 14px 18px;
+    background: #fff8f0;
+    border: 1px solid #f5dcc0;
+    border-radius: 8px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #8a6d3b;
+  }
+
+  .vote-warning strong {
+    color: var(--jahbar-red);
+  }
+
+  /* ===== 占位符标注 ===== */
+  .placeholder-note {
+    display: block;
+    background: var(--placeholder-bg);
+    border: 2px dashed var(--placeholder-border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #8B6914;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .placeholder-note::before {
+    content: "⚠ 待填充";
+    display: inline-block;
+    background: var(--jahbar-yellow);
+    color: #5a4500;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .placeholder-inline {
+    display: inline;
+    background: var(--placeholder-bg);
+    border: 1px dashed var(--placeholder-border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 13px;
+    color: #8B6914;
+    font-weight: 600;
+  }
+
+  /* ===== 引用块 ===== */
+  blockquote {
+    border-left: 3px solid var(--jahbar-yellow);
+    background: #fefcf3;
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  /* ===== 诉求区块 ===== */
+  .appeal-block {
+    background: linear-gradient(135deg, #fef9f0 0%, #fdf3e7 100%);
+    border: 1px solid #f0e0c8;
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin: 24px 0;
+  }
+
+  .appeal-block p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+  .appeal-block p:last-child { margin-bottom: 0; }
+  .appeal-block p strong { color: var(--jahbar-red); }
+
+  .appeal-list {
+    list-style: none;
+    margin: 14px 0;
+    padding: 0;
+  }
+
+  .appeal-list li {
+    position: relative;
+    padding: 8px 0 8px 28px;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .appeal-list li::before {
+    content: "→";
+    position: absolute;
+    left: 4px;
+    top: 8px;
+    color: var(--jahbar-red);
+    font-weight: 700;
+  }
+
+  .appeal-list li strong {
+    color: var(--jahbar-red);
+  }
+
+  /* ===== 分隔线 ===== */
+  .divider {
+    border: none;
+    height: 1px;
+    background: var(--border-light);
+    margin: 36px 0;
+  }
+
+  /* ===== 结尾区 ===== */
+  .ending-quote {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--jahbar-red);
+    text-align: center;
+    margin: 28px 0;
+    line-height: 1.7;
+    padding: 0 20px;
+  }
+
+  .vision-list {
+    list-style: none;
+    margin: 18px 0;
+    padding: 0;
+  }
+
+  .vision-list li {
+    position: relative;
+    padding: 8px 0 8px 28px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text-primary);
+  }
+
+  .vision-list li::before {
+    content: "✦";
+    position: absolute;
+    left: 4px;
+    top: 8px;
+    color: var(--jahbar-yellow);
+    font-size: 14px;
+  }
+
+  /* ===== 证据附录 ===== */
+  .evidence-appendix {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 3px double var(--border-light);
+  }
+
+  .evidence-note {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: #f8f8f6;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* ===== 底部品牌区 ===== */
+  .footer-brand {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 2px solid var(--border-light);
+    text-align: center;
+  }
+
+  .footer-brand .brand-logo-text {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .footer-brand .brand-slogan {
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    margin-bottom: 6px;
+  }
+
+  .footer-brand .brand-location {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .footer-brand .brand-colors {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .footer-brand .brand-colors span {
+    display: inline-block;
+    width: 40px;
+    height: 4px;
+  }
+  .footer-brand .brand-colors span:nth-child(1) { background: var(--jahbar-red); }
+  .footer-brand .brand-colors span:nth-child(2) { background: var(--jahbar-yellow); }
+  .footer-brand .brand-colors span:nth-child(3) { background: var(--jahbar-green); }
+
+  .footer-brand .copyright {
+    font-size: 12px;
+    color: #bbb;
+    margin-top: 12px;
+  }
+
+  /* ===== 强调文字 ===== */
+  .highlight-red { color: var(--jahbar-red); font-weight: 700; }
+  .highlight-green { color: var(--jahbar-green); font-weight: 700; }
+
+  /* ===== 统计数据高亮 ===== */
+  .stat-inline {
+    display: inline-block;
+    background: #fef5f5;
+    color: var(--jahbar-red);
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-size: 0.95em;
+  }
+
+  /* ===== 滚动条美化 ===== */
+  .table-wrapper::-webkit-scrollbar { height: 6px; }
+  .table-wrapper::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 3px; }
+  .table-wrapper::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- 顶部品牌色条 -->
+  <div class="brand-bar"></div>
+
+  <div class="article-body">
+
+    <!-- 主标题 -->
+    <h1 class="article-title">我不是来吵架的</h1>
+    <div class="title-accent"></div>
+
+    <!-- 写在最前面 -->
+    <div class="preface">
+      <p class="negation">这不是一篇维权声明。</p>
+      <p class="negation">不是一篇声讨书。</p>
+      <p class="negation">不是一篇"我是受害者"的控诉。</p>
+      <p style="margin-top: 16px;">我只是想，在所有人都已经选好边之后，提供一个还没有人完整讲过的视角。</p>
+      <p>因为这件事，已经不只是家吧和一支乐队之间的事了。</p>
+      <p>它是关于：当一个人先把故事讲出来，当互联网奖励愤怒和对立，当"我就是受害者"成为最有力的叙事武器时，真相会变成什么样子。</p>
+      <p>以及，我们每一个人，在这个过程中扮演了什么角色。</p>
+      <p class="stand-line">先说清楚立场：家吧坚决反对地域歧视，反对网暴，反对任何形式的人身攻击。你喜不喜欢我、站在哪一边，都是你的自由。但这些是我的底线。</p>
+    </div>
+
+    <!-- 先做三道选择题 -->
+    <h2 class="section-title">先做三道选择题</h2>
+
+    <div class="quiz-intro">
+      这篇文章不来说服谁。它只做两件事：第一，请你做三道选择题。每题之后，我会告诉你选这个选项的人偏向哪种信息处理习惯。没有对错，只是画像。第二，公布我的事情。完整的信息，放在最后。你自己判断。
+    </div>
+
+    <!-- 第1题 -->
+    <div class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-num">1</div>
+        <div class="quiz-title">一段"假弹"视频</div>
+      </div>
+      <div class="quiz-scenario">
+        一个博主发了一段剪辑视频，给某乐队定性"假弹"。画面里只有几个"对不上口型"的片段，配文：演了这么多年居然假弹。视频很快传开，评论区一片"骗子"。
+      </div>
+      <div class="quiz-options">
+        <div class="quiz-option"><span class="opt-letter">A</span><span>假弹太恶心了，就该被曝光</span></div>
+        <div class="quiz-option"><span class="opt-letter">B</span><span>可能有隐情，等乐队回应</span></div>
+        <div class="quiz-option"><span class="opt-letter">C</span><span>几个片段说明不了什么</span></div>
+        <div class="quiz-option"><span class="opt-letter">D</span><span>我先看看完整情况再判断</span></div>
+      </div>
+      <div class="quiz-hint">（先在心里选一个，再往下看。这不是考试，没有对错。）</div>
+      <div class="quiz-reveal">
+        <div class="quiz-reveal-title">▸ 选项画像</div>
+        <div class="quiz-reveal-item"><span class="reveal-letter">A</span><span class="reveal-emoji">🔥</span><span class="reveal-name">火线审判官：</span><span>容易在第一条信息出现时就形成判断，反应快、正义感强，但也最容易成为被裁剪片段的第一落点</span></div>
+        <div class="quiz-reveal-item"><span class="reveal-letter">B</span><span class="reveal-emoji">🌊</span><span class="reveal-name">随波观察者：</span><span>习惯先看看再说，但很容易被评论区和多数人的声音悄悄带走</span></div>
+        <div class="quiz-reveal-item"><span class="reveal-letter">C</span><span class="reveal-emoji">🔍</span><span class="reveal-name">证据考古人：</span><span>一定要看到完整上下文才肯下结论，是信息洪流里最慢、也最稳的一类</span></div>
+        <div class="quiz-reveal-item"><span class="reveal-letter">D</span><span class="reveal-emoji">🧊</span><span class="reveal-name">冰点留白者：</span><span>本能抗拒下判断，宁可先放着。有时候是冷静，有时候是回避</span></div>
+      </div>
+      <p style="margin-top: 14px; font-size: 13.5px; color: var(--text-muted); text-align: center; font-style: italic;">⚠️ 四种都是真实的人，包括你自己。这里不下判决，只照镜子。</p>
+    </div>
+
+    <!-- 第2题 -->
+    <div class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-num">2</div>
+        <div class="quiz-title">一个30秒切片</div>
+      </div>
+      <div class="quiz-scenario">
+        某场演唱会音响短暂出了问题，大约五分钟。有人拍了30秒切片，配标题"百万级音响就这？"很快全网说这场"翻车""不专业"。
+      </div>
+      <div class="quiz-options">
+        <div class="quiz-option"><span class="opt-letter">A</span><span>这音响太差了，主办方骗钱</span></div>
+        <div class="quiz-option"><span class="opt-letter">B</span><span>可能只是短暂问题</span></div>
+        <div class="quiz-option"><span class="opt-letter">C</span><span>30秒说明不了整场</span></div>
+        <div class="quiz-option"><span class="opt-letter">D</span><span>我先看完整情况再判断</span></div>
+      </div>
+      <div class="quiz-hint">（同上四型，不再重复）</div>
+    </div>
+
+    <!-- 第3题 -->
+    <div class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-num">3</div>
+        <div class="quiz-title">一个出错、但已经补救的人</div>
+      </div>
+      <div class="quiz-scenario">
+        合作中，一方确实出了错，随后当场道歉、并在约定时间内完成了全部补救，合作已经闭环。但事后另一方写了长文，只强调"他出错"，把"他补救"省略了。
+      </div>
+      <div class="quiz-options">
+        <div class="quiz-option"><span class="opt-letter">A</span><span>出过错就是不行，没必要洗</span></div>
+        <div class="quiz-option"><span class="opt-letter">B</span><span>要看补救到不到位</span></div>
+        <div class="quiz-option"><span class="opt-letter">C</span><span>既然闭环了，就不该被反复追究</span></div>
+        <div class="quiz-option"><span class="opt-letter">D</span><span>信息不全，我先不判断这个人</span></div>
+      </div>
+      <div class="quiz-hint">（同上四型）</div>
+    </div>
+
+    <div class="quiz-footer-note">
+      <p>做完三题，回头数一数你选最多的字母是哪一个。没有哪一型是"坏人"，也没有哪一型是"正确答案"。</p>
+      <p>我写这个测试，不是为了证明谁容易被骗。而是想让你亲眼抓到一次：<strong>"操，我刚刚真的就这么判断了。"</strong></p>
+      <p>——当你对一个剪辑视频、一个30秒切片、一段被裁剪的聊天记录下判断的那一秒，你就已经站在了"火线审判官"的位置上。</p>
+      <p><strong>今天被审判的是我，明天可能就是你。</strong></p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 现在，公布我的事情 -->
+    <h2 class="section-title">现在，公布我的事情</h2>
+
+    <p>前面三个故事，前两个是音乐圈真实发生过的。第三个，是我自己。</p>
+
+    <h3 class="subsection-title">互联网最喜欢的游戏：对立</h3>
+
+    <p>你有没有发现，互联网上最容易火的内容，都有一个共同的配方：一个口号 + 一个受害者 + 一个敌人 + 一个让人愤怒的细节。</p>
+
+    <p>某乐队的两篇文章，完美符合这个配方。</p>
+
+    <p>第一篇：<strong>"你们所谓的搞音乐就是给我们乐队穿小鞋吗？？？！！！"</strong></p>
+    <p>第二篇：<strong>"认真对待演出是一种原罪吗？"</strong></p>
+
+    <p>口号有了——"穿小鞋""原罪"。受害者有了——乐队。敌人有了——家吧。愤怒的细节有了——19:30才开门、20:00不是早一点点、我是酒吧。</p>
+
+    <p>然后，<span class="stat-inline">5.1万阅读</span>，<span class="stat-inline">720条评论</span>。</p>
+
+    <p>这不是巧合。这是互联网的运行机制。</p>
+
+    <p>复旦大学的研究发现，只有<span class="stat-inline">2.2%</span>的青年网民表现出网络暴力倾向，但<span class="stat-inline">65.3%</span>的人表示自己或周围人遭遇过网暴。不需要大多数人都有恶意，只要少数人主动攻击，对单个被攻击者来说就是压倒性的规模。</p>
+
+    <p>而带有"道德+情绪"语言的信息，传播率远高于中性信息。人们会通过观察平台反馈，学习更频繁地表达道德愤怒。</p>
+
+    <p>换句话说：互联网不是在反映我们的情绪，互联网是在训练我们更快地愤怒、更快地站队、更快地把复杂的事情简化成"好人vs坏人"。</p>
+
+    <h3 class="subsection-title">"我就是受害者"：最有力的叙事武器</h3>
+
+    <p>在互联网上，"受害者"身份是一种权力。</p>
+
+    <p>一旦你成功地把自己塑造成受害者，你就获得了三样东西：</p>
+
+    <ol class="action-list">
+      <li data-num="1"><strong>道德豁免权</strong>——我说什么都是因为我受了委屈，所以我说什么都可以被理解</li>
+      <li data-num="2"><strong>解释垄断权</strong>——事情的经过由我来定义，对方说什么都是"洗白""狡辩"</li>
+      <li data-num="3"><strong>群体动员力</strong>——人们会自动站在"弱者"一边，不需要核实事实</li>
+    </ol>
+
+    <p>但这里有一个问题：受害者身份是可以被构建的。</p>
+
+    <p>你可以只说对自己有利的事实。你可以删掉对方道歉和补救的部分。你可以用半句话代替完整的一段话。你可以用打码截图支撑严重的指控。你可以把对方的真人头像放在封面上，让5.1万人对着照片骂。</p>
+
+    <p>而对方，沉默了三个月。</p>
+
+    <p>在这三个月里，"家吧不专业""家吧地域歧视""家吧穿小鞋"的叙事已经固化了。等我再说话时，我说什么都像"洗白"。</p>
+
+    <p>这就是"受害者叙事"的力量：它不需要全部是真的，它只需要先被说出来。</p>
+
+    <hr class="divider">
+
+    <!-- 事件完整时间线 -->
+    <h2 class="section-title">事件完整时间线</h2>
+
+    <p>我不打算用情绪对抗情绪。我只把事实放在这里。</p>
+
+    <div class="timeline-container">
+
+      <!-- 前期对接 -->
+      <div class="timeline-phase">
+        <div class="timeline-phase-title">📋 前期对接：4个月，一切正常</div>
+
+        <div class="timeline-item">
+          <div class="timeline-time">2025.12.21</div>
+          <div class="timeline-content">乐队经纪联系家吧，询问档期</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-time">2026.01.05</div>
+          <div class="timeline-content">敲定5月23日演出，演出时间20:00</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-time">1月 — 5月</div>
+          <div class="timeline-content">正常对接报批、宣发、票务，全程融洽</div>
+        </div>
+
+        <div class="timeline-item important">
+          <div class="timeline-time">5.22 17:47</div>
+          <div class="timeline-content">乐队在对接群发了设备清单和Rundown，Rundown上写着调音时间17:00-18:30，演出20:00-21:40。家吧回复"收到"。</div>
+        </div>
+      </div>
+
+      <p style="font-size: 14.5px; color: var(--text-secondary); background: #fef5f5; padding: 12px 16px; border-radius: 8px; margin: 16px 0; border-left: 3px solid var(--jahbar-red);">
+        <strong style="color: var(--jahbar-red);">家吧的失误：</strong>我们回复了"收到"，但没有注意到Rundown上的调音时间和家吧惯例不一致。这个错，我们认，从头到尾都认。
+      </p>
+
+      <span class="placeholder-note">此处插入完整聊天记录截图——5月22日Rundown发送及"收到"回复</span>
+
+      <!-- 演出当天 -->
+      <div class="timeline-phase" style="margin-top: 28px;">
+        <div class="timeline-phase-title">🎤 演出当天：从发现问题到解决问题</div>
+
+        <div class="timeline-item">
+          <div class="timeline-time">5.23 16:22</div>
+          <div class="timeline-content">乐队问场地附近有没有停车场</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-time">16:43</div>
+          <div class="timeline-content">家吧回复"可以先停家吧门口，19:30开门哦"</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-time">16:49</div>
+          <div class="timeline-content">乐队说"老师我们是17:00调音哦"</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-time">16:55</div>
+          <div class="timeline-content">乐队已经到门口了，问"几点开门"</div>
+        </div>
+
+        <div class="timeline-item important">
+          <div class="timeline-time">17:03</div>
+          <div class="timeline-content">乐队说"我们已经到门口了才被告知19:30调音，调音时间和演出质量都无法保证了"</div>
+        </div>
+
+        <div class="timeline-item important">
+          <div class="timeline-time">17:03</div>
+          <div class="timeline-content"><strong>家吧（我）回复：</strong>"哈喽，是这样可能大家都忙疏忽了~"</div>
+          <div class="timeline-quote">"消息是我们疏忽了"</div>
+        </div>
+
+        <div class="timeline-item important">
+          <div class="timeline-time">17:03</div>
+          <div class="timeline-content"><strong>家吧（我）回复：</strong>"时间是我们的问题，我代表家吧表示向各位抱歉~但是老师20:00对于家吧来说是真的不是早点一点点哦 您可以去打听一下，但是如果您坚持我马上10分钟到亲自来给您调"</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-time">17:11</div>
+          <div class="timeline-content">家吧（我）回复："我是酒吧"</div>
+        </div>
+
+        <div class="timeline-item resolved">
+          <div class="timeline-time">17:11</div>
+          <div class="timeline-content"><strong>家吧（我）回复：</strong>"Ok 我们的问题，20:00保证让您开~"</div>
+        </div>
+
+        <div class="timeline-item resolved">
+          <div class="timeline-time">17:11</div>
+          <div class="timeline-content">家吧（我）回复："各位老师稍等哦~马上到哈"</div>
+        </div>
+
+        <div class="timeline-item resolved">
+          <div class="timeline-time">17:24</div>
+          <div class="timeline-content">家吧工作人员说"已经到了""来吧"</div>
+        </div>
+
+        <div class="timeline-item resolved">
+          <div class="timeline-time">17:45</div>
+          <div class="timeline-content">家吧说"所有老师都到了哦"</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-time">17:55</div>
+          <div class="timeline-content">乐队发演出intro、歌单</div>
+        </div>
+
+        <div class="timeline-item resolved">
+          <div class="timeline-time">监控 18:59</div>
+          <div class="timeline-content">舞台上多人正在调音</div>
+        </div>
+
+        <div class="timeline-item resolved">
+          <div class="timeline-time">乐队自己确认</div>
+          <div class="timeline-content">"整个调音过程很专业很顺畅，并在19:10左右结束调音"</div>
+        </div>
+
+        <div class="timeline-item resolved">
+          <div class="timeline-time">20:00</div>
+          <div class="timeline-content"><strong>演出准时开始</strong></div>
+        </div>
+      </div>
+
+      <div class="timeline-summary">
+        ✅ 从承诺"10分钟到"（17:03）到实际到达（17:24），用了21分钟。调音"很专业很顺畅"，19:10结束，20:00准时开演。
+      </div>
+    </div>
+
+    <span class="placeholder-note">此处插入完整聊天记录截图——5月23日演出当天全部对话，未截断</span>
+    <span class="placeholder-note">此处插入监控截图——18:59舞台正在调音</span>
+
+    <hr class="divider">
+
+    <!-- 被删掉的原话 -->
+    <h2 class="section-title">被删掉的原话</h2>
+
+    <p>乐队5月24日第一篇文章："被告知是7:30调音"</p>
+
+    <p>乐队5月26日第二篇文章：</p>
+    <ul style="margin: 10px 0 18px 20px; font-size: 15px; line-height: 1.8; color: var(--text-secondary);">
+      <li>"得到了场地19:30才开门的回复"</li>
+      <li>"调音时间还是需要按我们场地的来哦"</li>
+      <li>"20:00对于家吧来说是真的不是早点一点点哦 您可以去打听一下"</li>
+      <li>"我是酒吧"</li>
+    </ul>
+
+    <div class="deleted-quotes">
+      <div class="deleted-quote-item">
+        <span class="status deleted">已删除</span>
+        <span class="quote-text">"时间是我们的问题，我代表家吧表示向各位抱歉……但是如果您坚持我马上10分钟到亲自来给您调"——在两篇文章里完全消失了。</span>
+      </div>
+      <div class="deleted-quote-item">
+        <span class="status deleted">已删除</span>
+        <span class="quote-text">"Ok 我们的问题，20:00保证让您开~"——消失了。</span>
+      </div>
+      <div class="deleted-quote-item">
+        <span class="status deleted">已删除</span>
+        <span class="quote-text">"各位老师稍等哦~马上到哈"——消失了。</span>
+      </div>
+      <div class="deleted-quote-item">
+        <span class="status deleted">已删除</span>
+        <span class="quote-text">17:24"已经到了"、17:45"所有老师都到了"、18:59监控里正在调音、乐队自己说的"很专业很顺畅""19:10左右结束"——全部消失了。</span>
+      </div>
+      <div class="deleted-quote-item">
+        <span class="status kept">被留下</span>
+        <span class="quote-text kept-text">留下来的，只有那半句话："20:00对于家吧来说是真的不是早点一点点哦 您可以去打听一下。"</span>
+      </div>
+    </div>
+
+    <p>这就是第2题那个"30秒切片"的结构：一个被裁剪的片段 + 一句引导性的配文 = 成千上万人在不了解真相时下判断。</p>
+
+    <hr class="divider">
+
+    <!-- 关于那几个"新罪名" -->
+    <h2 class="section-title">关于那几个"新罪名"</h2>
+
+    <p>第二篇文章新增指控：人身攻击、地域歧视、虐猫辱女、民族对立。</p>
+
+    <p>所有支撑截图全部打码——头像打码、昵称打码、群名打码。</p>
+
+    <div class="appeal-block">
+      <p><strong>家吧的正式回应：</strong>请公开未打码的、带发言者身份标识的原始聊天记录截图。如果那些话确实出自家吧任何工作人员之口，我们承担一切责任；如果不是，请撤回该项指控。</p>
+      <p>截至今天，对方始终未公开任何一张未打码的原始截图。</p>
+    </div>
+
+    <span class="placeholder-note">此处插入对方文章中打码截图的原图对比——展示打码状态</span>
+
+    <hr class="divider">
+
+    <!-- 关于我的头像 -->
+    <h2 class="section-title">关于我的头像</h2>
+
+    <p>两篇文章封面，用的都是我的真人照片。未经许可。</p>
+
+    <p><span class="stat-inline">5.1万阅读</span>，<span class="stat-inline">720条评论</span>。大量评论直接对着我的照片骂。</p>
+
+    <p>这个封面，从5月26日持续挂了超过三个月。</p>
+
+    <p>我常常会换位思考：如果换成一个内心更加脆弱的人，经历同样一轮舆论投射，很有可能会滋生出极端的心理压力，甚至会走向伤害自己的念头。倘若以此再反过来去胁迫另一方，又会酿成怎样的结果。</p>
+
+    <p>互联网的传播威力远大于我们的想象，我由衷希望人和人之间，不要轻易把对方往最坏的方向去想象。</p>
+
+    <span class="placeholder-note">此处插入对方公众号封面截图——展示真人头像被用作封面的事实</span>
+
+    <hr class="divider">
+
+    <!-- 关于那720条评论 -->
+    <h2 class="section-title">关于那720条评论</h2>
+
+    <p>有骂家吧的："不专业""店大欺客""黑社会""地域黑"。</p>
+
+    <p>也有替家吧说话的："自己没对接好，怪人场地？""炒作自己受害，舆论被玩得很明显""需求尽量满足的帮扶新乐队"。</p>
+
+    <p>而我做的事情是：<strong>劝别人删掉骂他们的话。</strong></p>
+
+    <p>事件闹起来后，有人在群里、网上骂某乐队。我看到了，我去劝他们删掉了。</p>
+
+    <p>为什么？因为我不想任何人被那样对待。哪怕被骂的是他们。</p>
+
+    <hr class="divider">
+
+    <!-- 三分法 -->
+    <h2 class="section-title">三分法：事实、感受与主观解读</h2>
+
+    <p>读到这里，有一个很重要的概念区分，也是阅读所有行业纠纷内容可以参考的标尺：</p>
+
+    <div class="concept-block">
+      <div class="concept-item">
+        <span class="concept-label fact">客观事实</span>
+        <span class="concept-desc">聊天记录、时间线、实际执行的行为，可以留存证据佐证，是实实在在发生的事。</span>
+      </div>
+      <div class="concept-item">
+        <span class="concept-label feeling">个人感受</span>
+        <span class="concept-desc">委屈、恼火、失望等等。感受本身是真实的，理应被看见。</span>
+      </div>
+      <div class="concept-item">
+        <span class="concept-label interpret">主观解读</span>
+        <span class="concept-desc">基于事件去揣测他人动机、内心想法。这属于推论，无法被证据直接证实。</span>
+      </div>
+    </div>
+
+    <p>很多公开的冲突文字，会把这三者交织在一起写，阅读时很容易把感受、主观猜想，直接当成已经落地的事实。</p>
+
+    <p>本次事件存在三套叙述版本：我方、乐队乐手、乐队经纪人。三份叙述面对同一桩过往，但每个人都会基于自身立场做信息取舍，叠加属于自己的感受与解读。</p>
+
+    <p><strong>客观真相只有一套，独立于三份叙述之外。</strong></p>
+
+    <hr class="divider">
+
+    <!-- 现实发生 VS 假设逻辑推演对照 -->
+    <h2 class="section-title">现实发生 VS 假设逻辑推演对照</h2>
+
+    <p>部分公开叙述里包含对我的行为与动机的猜想。</p>
+
+    <p>我不去直接争辩无法证实的内心想法，我们做两组逻辑对照：一边是真实发生的客观现实；另一边做逻辑假设——如果猜想当中描述的行为真的发生，事态大概率会走向什么样子。</p>
+
+    <p>大家可以自行比对参考。</p>
+
+    <div class="table-wrapper">
+      <table class="deduction-table">
+        <thead>
+          <tr>
+            <th style="width: 60px;">条目</th>
+            <th>叙述文本中的猜想描述</th>
+            <th>现实客观发生情况</th>
+            <th>假设推演：假如猜想属实，事态大概率走向</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>猜想1</td>
+            <td><span class="placeholder-inline">此处粘贴乐队原文对核心行为/动机的描述，保留原话，不做修改</span></td>
+            <td>我方出现失误 → 主动道歉 → 按时完成补救，合作完整闭环</td>
+            <td>倘若真的做出猜想描述的行为，就不会主动道歉并且落地补救，矛盾会在合作进行阶段就爆发，难以平稳完成整场合作</td>
+          </tr>
+          <tr>
+            <td>猜想2</td>
+            <td><span class="placeholder-inline">此处粘贴第二条原文猜想</span></td>
+            <td>我方识别问题，在约定时间内完成全部处置，20:00准时开演</td>
+            <td>倘若属实，现场会出现无法化解的合作故障，演出推进将会受阻</td>
+          </tr>
+          <tr>
+            <td>猜想3</td>
+            <td><span class="placeholder-inline">此处粘贴第三条原文猜想（如有）</span></td>
+            <td><span class="placeholder-inline">对应客观事实</span></td>
+            <td><span class="placeholder-inline">对应逻辑推演</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-note">
+      <strong>表格备注：</strong>表格右侧仅为顺着猜想做逻辑推演，不等于既定事实。感受值得被尊重，但动机类的猜想，可以拿实际发生过的行为互相校验。
+    </div>
+
+    <hr class="divider">
+
+    <!-- 不同人看到的不同版本 -->
+    <h2 class="section-title">不同人看到的不同版本</h2>
+
+    <p>同一件事，不同的人看到的是完全不同的版本。</p>
+
+    <div class="perspective-grid">
+      <div class="perspective-card p-band">
+        <div class="perspective-label"><span class="perspective-icon">🎸</span>乐队的视角</div>
+        <div class="perspective-text">
+          我们提前四个月就定了演出。Rundown上写了17:00调音。我们按时到了，结果场地19:30才开门。我们在门口等了很久。我们觉得不被尊重。我们觉得认真对待演出反而成了原罪。
+          <span class="feeling-note">这个感受是真实的。等待的焦虑、对演出质量的担心、觉得不被重视的委屈——这些都是真实的情绪。</span>
+        </div>
+      </div>
+
+      <div class="perspective-card p-me">
+        <div class="perspective-label"><span class="perspective-icon">👩</span>我的视角（家吧负责人）</div>
+        <div class="perspective-text">
+          我在生病。Rundown是前一天下午才发的，我回复了"收到"但没注意到调音时间冲突。演出当天乐队到了才发现问题。我第一时间道歉，承诺10分钟到，21分钟后工作人员到达，调音"很专业很顺畅"，20:00准时开演。然后，我的完整道歉在两篇文章里被删掉了。我的真人头像被挂在封面上三个月。三个严重指控用打码截图支撑。我沉默了三个月，因为我在生病，因为我想把事实核对清楚，因为我不想用情绪对抗情绪。
+          <span class="feeling-note">这个感受也是真实的。</span>
+        </div>
+      </div>
+
+      <div class="perspective-card p-staff">
+        <div class="perspective-label"><span class="perspective-icon">🔧</span>工作人员的视角</div>
+        <div class="perspective-text">
+          我们17:24就到了。18:59还在调音。乐队自己说"很专业很顺畅"。我们没有"穿小鞋"，我们是在补救。但没有人问我们发生了什么。
+        </div>
+      </div>
+
+      <div class="perspective-card p-audience">
+        <div class="perspective-label"><span class="perspective-icon">👥</span>观众的视角</div>
+        <div class="perspective-text">
+          我看了两篇文章，觉得乐队好惨，场地好过分。/ 我看了聊天记录，觉得场地已经道歉补救了，乐队有点过度反应。/ 我两边都看了，觉得都有问题。
+        </div>
+      </div>
+
+      <div class="perspective-card p-comments">
+        <div class="perspective-label"><span class="perspective-icon">💬</span>评论区的视角</div>
+        <div class="perspective-text">
+          720条评论里，有人在骂，有人在辩护，有人在围观，有人在趁机发泄自己的情绪。
+        </div>
+      </div>
+    </div>
+
+    <p>你看，同一件事，五个人看到五个版本。哪个是真的？</p>
+
+    <p><strong>都是真的。也都不是全部的真相。</strong></p>
+
+    <div class="psychology-note">
+      <p><strong>确认偏误：</strong>一旦你相信"某人是坏人"，你会更重视支持这个判断的截图和评论，而把反证解释为"洗白""狡辩"。</p>
+      <p style="margin-top: 8px;"><strong>归因偏差：</strong>自己出错是"环境问题"，别人出错是"人品问题"。</p>
+      <p style="margin-top: 8px;">乐队说"时间是场地的问题"——这是环境归因。<br>乐队说"场地故意针对我们"——这是人格归因。</p>
+      <p style="margin-top: 8px;">同一个场地，同一件事，两种完全不同的归因方式。</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 我作为一个女孩的做法 -->
+    <h2 class="section-title">我作为一个女孩的做法</h2>
+
+    <p>我是一个女孩。事发期间我正在生病。</p>
+
+    <p>但我没有拿性别当武器。我没有说"你们欺负一个女生"。我没有拿病历卖惨。</p>
+
+    <p>我做的事情是：</p>
+
+    <ol class="action-list">
+      <li data-num="1"><strong>第一时间道歉</strong>——"时间是我们的问题，我代表家吧表示向各位抱歉"</li>
+      <li data-num="2"><strong>第一时间补救</strong>——承诺10分钟到，工作人员21分钟到达，调音"很专业很顺畅"，20:00准时开演</li>
+      <li data-num="3"><strong>劝人删骂他们的话</strong>——事件闹起来后，有人骂某乐队，我去劝他们删掉了</li>
+      <li data-num="4"><strong>沉默三个月</strong>——不是因为理亏，是因为我在生病，是因为我想把每一条事实核对清楚</li>
+      <li data-num="5"><strong>不号召粉丝去对方账号</strong>——我没有让任何人去"讨说法"</li>
+      <li data-num="6"><strong>不用"造谣""抹黑"等定性词</strong>——我只陈述事实，不做定性</li>
+    </ol>
+
+    <p>如果我想玩"受害者游戏"，我有太多牌可以打：</p>
+
+    <ul class="could-do-list">
+      <li>我可以说"一个女孩，生病期间，被5.1万人对着照片骂"</li>
+      <li>我可以把乐队的头像挂在我的文章封面上</li>
+      <li>我可以发一篇"乐队白嫖场地、忘恩负义"的小作文</li>
+      <li>我可以号召我的粉丝去他们的评论区</li>
+    </ul>
+
+    <p>但我没有。</p>
+
+    <p><strong>因为我知道被这样对待是什么滋味。</strong></p>
+
+    <hr class="divider">
+
+    <!-- 白嫖商业 -->
+    <h2 class="section-title">白嫖商业：免费是如何变成义务的</h2>
+
+    <p>家吧19年来从未收取场租。靠卖酒维持运转，不靠任何平台或官方支持。</p>
+
+    <p>某乐队的文章自己也承认："免场地费扶持计划"。</p>
+
+    <p>但"免费"不是"白嫖"。</p>
+
+    <p>为了保证乐队卖出的每一张票真实有效，家吧严格检票——哪怕本来进店消费酒水的熟客，遇到场内有演出，也会告知需要购票入场。有不少客人因此直接离开。</p>
+
+    <p>这意味着，承接这场演出，家吧主动放弃了一部分现成酒水客流。是实实在在的生意损失。</p>
+
+    <p>从2019年至今，只要合作条件达成，家吧就会为乐队匹配舞台助理和现场配套支持。很多观众看不见的体力劳动、兜底工作，全部由场地内部人员承担。</p>
+
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 140px;">项目</th>
+            <th>家吧实际投入</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>场地费</td><td>19年免费，从未收取</td></tr>
+          <tr><td>舞台助理/配套</td><td>合作条件达成即匹配</td></tr>
+          <tr><td>酒水客流</td><td>严格检票，主动放弃现成客流</td></tr>
+          <tr><td>人员成本</td><td>大量看不见的体力劳动、兜底工作</td></tr>
+          <tr><td>定位</td><td>酒吧，不是商业Livehouse</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>最后一行，是关键：承接演出，我们主动放弃了一部分现成客流，是实实在在的生意损失。</p>
+
+    <p>这不是卖惨，这是事实。我们不是靠乐队"带来酒水生意"，我们是背着成本在做现场。</p>
+
+    <h3 class="subsection-title">一个心理学现象：礼物是如何变成默认配置的</h3>
+
+    <p>社会心理学研究区分两种关系模式：</p>
+
+    <ul style="margin: 14px 0 14px 20px; font-size: 15px; line-height: 1.8; color: var(--text-secondary);">
+      <li><strong style="color: var(--jahbar-green);">共同体关系</strong>：我看到你需要，所以愿意帮你。帮助本身来自对对方福祉的关心，不要求马上获得等价回报。</li>
+      <li><strong style="color: var(--jahbar-red);">交换关系</strong>：我提供什么？你提供什么？谁欠谁多少？权利义务是否对等？</li>
+    </ul>
+
+    <p>家吧过去19年，运行的是共同体关系：我今天给你场地，不是因为你欠我钱，而是因为我们都在做音乐，因为这个场景需要有人撑着。</p>
+
+    <p>但当某种帮助长期稳定、无需申请、没有价格、几乎每次都有时，新进入者可能根本不知道它原本是一种"给予"。</p>
+
+    <p>他们看到的是："家吧演出=免费场地+设备+技术+宣传。"</p>
+
+    <p>久而久之：<strong>选择→惯例→默认→权利预期。</strong></p>
+
+    <p>然后就出现了这次合同里的变化：</p>
+
+    <div class="appeal-block">
+      <p>家吧原文件说：<strong>"家吧是无偿场地提供及协作方。"</strong></p>
+      <p>对方法务改成：<strong>"甲方委托家吧提供现场演出服务。"</strong></p>
+    </div>
+
+    <p>这几个字的改变，本质上是关系框架的改变：</p>
+
+    <p>原来是"谢谢你愿意支持我们"。<br>一旦变成服务框架："你应该给我什么？"</p>
+
+    <p>于是很自然就会出现：调音师呢？摄影呢？宣传呢？休息室呢？舞台几点准备好？为什么这个没做到？</p>
+
+    <p>这不是说乐队变坏了。这是说，当免费变成默认，默认就会变成权利，权利就会被写进合同里变成义务。</p>
+
+    <blockquote>鱼当然不会感谢水。它甚至不知道水是有人一桶一桶倒进去的。</blockquote>
+
+    <hr class="divider">
+
+    <!-- 过去、现在、未来 -->
+    <h2 class="section-title">过去、现在、未来</h2>
+
+    <p>不是"以前的人更纯粹，现在的人变复杂了"。以前的scene一样有排外、鄙视链、抢话语权、谁跟谁不爽。区别在于：过去的社会结构让这些东西不容易占据全部生活，而今天的技术结构会持续放大它。</p>
+
+    <div class="table-wrapper">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>维度</th>
+            <th>以前</th>
+            <th>现在</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>归属</td><td>固定的地方、固定的一群人</td><td>同时和几十个地方有一点关系，connection多了，belonging薄了</td></tr>
+          <tr><td>身份</td><td>先生活、再慢慢长出身份</td><td>先学会身份标签，再去现场</td></tr>
+          <tr><td>参与</td><td>我在现场</td><td>我在现场+一个脑内观察者"我看起来怎么样"</td></tr>
+          <tr><td>认可</td><td>模糊的"好像挺受欢迎"</td><td>精确的followers/likes/plays，社会认可被数字化</td></tr>
+          <tr><td>冲突</td><td>晚上结束，第二天上班，情绪自然回落</td><td>always-on，凌晨截图、白天群聊、永不下班</td></tr>
+          <tr><td>遗忘</td><td>19岁的荒唐，三年后没人记得</td><td>screenshot/repost/archive，瞬间接近永久</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>真正变化的，是人和文化发生关系的整个方式。</p>
+
+    <p>不是人变坏了，而是人开始被平台塑形：</p>
+
+    <ol class="action-list">
+      <li data-num="1">审美开始适应平台——什么画面更容易被点赞</li>
+      <li data-num="2">表达开始适应平台——什么措辞更容易被转发</li>
+      <li data-num="3">人格开始适应平台——长期以某种方式呈现自己，反过来塑造自我概念</li>
+    </ol>
+
+    <p>不是"我在平台上扮演自己"，而是慢慢<strong>"我开始成为那个平台上的自己"。</strong></p>
+
+    <p>Scene从来不是"大家知道同一种音乐"，而是同一批人，反复出现在同一个地方，经历大量没有传播价值、没有照片、甚至有点无聊的时间。</p>
+
+    <p><strong>文化真正长出来的地方，恰恰是那些算法觉得毫无价值的时间。</strong></p>
+
+    <hr class="divider">
+
+    <!-- 家吧的理念文化 -->
+    <h2 class="section-title">家吧的理念文化</h2>
+
+    <p>家吧从来都不是国内行业认知里标准意义上的Livehouse。</p>
+
+    <p>本质上，我们是一间酒吧，同时提供可以做演出的场景。</p>
+
+    <p>家吧没有专职服务员。买酒需要自助到吧台付款，酒水也要自己去吧台自取。在这里人人平等，运行逻辑依靠互帮互助，我们一直向往peace与有爱的现场氛围。</p>
+
+    <p>很多观众看到的，是舞台上几十分钟到一两个小时的热闹。但一场演出落地，背后是一整条链条：前期对接、档期确认、设备核对、人员协调、物资准备、设备调试、现场应急、收尾复盘。</p>
+
+    <p>像家吧这样的场地，很多时候要承担大量看不见的体力工作——细碎的准备、补救、兜底，观众不会看见。这些工作不出现在舞台上，却决定着现场最终体验。</p>
+
+    <p>我真心希望来到家吧的人，可以和这里的工作人员、和这个场域真正靠近，能感受到这里互帮互助的有爱氛围，而不只是完成一场交易。</p>
+
+    <p>互相尊重不只体现在发生矛盾的时刻，也藏在这些细碎、日常的相处细节之中。</p>
+
+    <hr class="divider">
+
+    <!-- 关于道歉 -->
+    <h2 class="section-title">关于道歉：我要的是一个具体的交代</h2>
+
+    <p>基于两篇公开内容带来的实际影响，我有一份期待。</p>
+
+    <p>既然两篇文章大量使用了个人内心感受、主观揣测去描述我方，我期待一份细节化的公开澄清，对应文中每一条主观动机猜想，以及头像长期被不当使用这件事。</p>
+
+    <p>具体来说，我希望被正视的，是这些细节：</p>
+
+    <ul class="appeal-list">
+      <li><strong>"穿小鞋"的猜想</strong>——请回到完整时间线与约定，核对是否存在系统性针对</li>
+      <li><strong>地域、性别相关的暗示</strong>——请回到原文措辞，核对是否被引导性放大</li>
+      <li><strong>被裁剪的聊天记录</strong>——请回到完整未截断上下文，核对省略了什么</li>
+      <li><strong>长期使用的真人头像封面</strong>——请正视未经许可、持续数月这一客观事实</li>
+    </ul>
+
+    <p>这份诉求，我会通过私下正式渠道同步给乐队与经纪人。推文只陈述我的感受，不做公开胁迫。</p>
+
+    <p>我认可的：是初期我方的失误，以及我已经完成的补救闭环。我不否认责任，只希望责任被完整、对称地呈现。</p>
+
+    <hr class="divider">
+
+    <!-- 新规则 -->
+    <h2 class="section-title">新规则：家吧的边界</h2>
+
+    <p>经历这一次事件，我们内部做了完整复盘。</p>
+
+    <p>一个场地拥有选择合作对象的决策权，这是合作关系本身的一部分。</p>
+
+    <p>往后家会落地以下新规则：</p>
+
+    <div class="rule-card">
+      <div class="rule-num">1</div>
+      <div class="rule-content">
+        <div class="rule-title">不免票公开</div>
+        <div class="rule-desc">家吧不再对演出人员、乐队亲友、行业人士默认免票。所有进入演出区域的人员，均需购票或在Guest List中明确登记。这不是为了赚门票钱——票房100%归演出方。这是为了让每一个进入现场的人，都对这场演出有基本的尊重和参与感。</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num">2</div>
+      <div class="rule-content">
+        <div class="rule-title">没有服务员</div>
+        <div class="rule-desc">家吧没有专职服务员。买酒自助到吧台付款，酒水自助取。这不是服务不周，这是家吧的运行方式。在这里人人平等，运行逻辑依靠互帮互助。我们会在演出对接手册中明确告知所有合作方。</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num">3</div>
+      <div class="rule-content">
+        <div class="rule-title">我是酒吧</div>
+        <div class="rule-desc">家吧本质上是一间酒吧，同时提供可以做演出的场景。不是标准商业Livehouse。我们不提供专职调音师、不提供摄影、不提供休息室、不提供艺人统筹。我们提供的是：一个可以做演出的空间、基础设备、以及我们能做到的最大支持。这些会在合作前明确写进合同，不再靠"默契"。</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num">4</div>
+      <div class="rule-content">
+        <div class="rule-title">肖像与内容授权</div>
+        <div class="rule-desc">合作期间产生的影像、文字，使用前须经对方确认；未经许可不得使用他人肖像或裁剪他人内容用于传播。</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num">5</div>
+      <div class="rule-content">
+        <div class="rule-title">私下优先</div>
+        <div class="rule-desc">出现分歧，先私下沟通、给彼此解释的机会，不以第一时间诉诸公开舆论为默认方式。</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num">6</div>
+      <div class="rule-content">
+        <div class="rule-title">完整信息原则</div>
+        <div class="rule-desc">任何对外陈述，应区分客观事实/个人感受/主观解读，不裁剪、不省略关键上下文。</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num">7</div>
+      <div class="rule-content">
+        <div class="rule-title">内部黑名单机制</div>
+        <div class="rule-desc">这份名单不会对外公示、不会公开挂人示众，不会拿来当做公开批判的工具。仅用于我们内部合作筛选，只服务于我们自身的合作决策权。不再开展合作的对象包含：不尊重场地、不尊重现场工作人员；缺少对等付出意识，也缺少基本感恩意识的合作方。</div>
+      </div>
+    </div>
+
+    <p style="margin-top: 20px;">这套规则不是针对本次事件中的某一方专门设立，而是经过本次冲突，让我们意识到原有合作机制存在漏洞，因此迭代出适用于未来所有合作的标准。</p>
+
+    <p>商业合作本就是双向选择，我们同样接受别人选择不与我们合作。</p>
+
+    <p>我们依旧希望可以继续服务认真对待现场、互相尊重的乐队与音乐人。也深知我们自身依旧有很多地方需要持续改进。</p>
+
+    <hr class="divider">
+
+    <!-- 读者观点调研 -->
+    <h2 class="section-title">读者观点调研</h2>
+
+    <span class="placeholder-note">公众号投票功能插入位置</span>
+
+    <div class="vote-card">
+      <div class="vote-card-header">
+        <div class="vote-icon">📊</div>
+        <div class="vote-title">读完以上全部内容，你的观点更接近下面哪一项？</div>
+        <div class="vote-hint">投票仅收集不同人的理解差异，投票结果不等于客观真相。每个人都可以保有自己的看法。</div>
+      </div>
+
+      <ul class="vote-options">
+        <li><span class="option-num">1</span><span>看完完整经过，我更能够理解乐队一方的感受</span></li>
+        <li><span class="option-num">2</span><span>看到完整事实，我认为前期出错方补救到位，后续公开表述存在部分过度放大</span></li>
+        <li><span class="option-num">3</span><span>双方都存在处理上值得斟酌的地方，可以互相理解</span></li>
+        <li><span class="option-num">4</span><span>即便看完现有材料，我依旧很难形成确定看法</span></li>
+        <li><span class="option-num">5</span><span>我保留个人喜好偏向，但不会攻击、歧视任何一方当事人</span></li>
+      </ul>
+
+      <div class="vote-warning">
+        <strong>⚠️ 重要提醒：</strong>客观事实仅有一套。投票结果只代表读者个人观点，票数高低不能判定是非。恳请所有人拒绝对立引战、地域歧视与人身攻击。每个圈子生存都不容易，希望大家彼此留有余地。
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 愿景与结尾 -->
+    <h2 class="section-title">愿景与结尾</h2>
+
+    <p>每一场热烈演出的背后，都藏着大量观众看不见的对接、体力劳动、兜底补救。整个现场行业，乐队、主办方、场地方、工作人员，大家生存各有压力。</p>
+
+    <p>不必因为一次合作分歧，额外制造伤害。</p>
+
+    <p>互联网很擅长抓取人的情绪弱点，冲突更容易博取目光。但现场音乐环境，终究要靠互相尊重、对等付出，才能够长久走下去。</p>
+
+    <p>那份学术研究报告里有一句话，我非常认同：</p>
+
+    <blockquote>中国城市独立音乐场景真正危险的地方，不是"青年比普通人坏"，而是高度亲密的人际网络往往承担了本应由制度承担的功能。</blockquote>
+
+    <p>朋友同时可能是乐手、主办、场地方、媒体、合作伙伴、评论者和仲裁者；一旦冲突发生，事实、关系、商业利益、艺术身份和道德立场瞬间混在一起。</p>
+
+    <p>最有效的治理不是"教育大家善良"，而是把安全、合同、支付、版权、投诉、媒体发布和争议解决从人情关系中拆出来，制度化。</p>
+
+    <p><strong>家吧愿意做这个制度化的先行者。</strong></p>
+
+    <p>我们希望：</p>
+
+    <ul class="vision-list">
+      <li>不公平发生时，不要因为怕麻烦而沉默</li>
+      <li>但在发声之前，也不要把自己交给情绪</li>
+      <li>看证据，看上下文，分清事实和推测</li>
+      <li>信息不足，就暂缓判断</li>
+      <li>如果看完以后你依然认为某件事不对——那就说出来</li>
+    </ul>
+
+    <p>文化是共同生长的。不是一方剥削另一方，不是一方碾压另一方，是我们一起把这个场景撑起来。</p>
+
+    <p>人讲述往事，总会带上自己的情绪与立场。感受不分真假，但感受不等于事实；推演猜想，不等同真实发生。</p>
+
+    <p>你依旧可以不认可我，也可以全然共情乐队，这些都是正常的。只是希望这件事到此为止，不要蔓延成对任何人的恶意攻击、标签化、地域歧视。</p>
+
+    <p>这个圈子要好起来，靠的不是舆论争吵、片段截取、情绪煽动；恰恰是把合作矛盾变成舆论对抗这件事，在一点点消耗它。</p>
+
+    <p>我希望我们能团结一点，有爱一点。——不是不能有矛盾，而是有矛盾时可以坐下来聊，可以私下解决，可以给彼此一个解释的机会。</p>
+
+    <div class="ending-quote">因为今天被审判的是我，明天可能就是你。</div>
+
+    <p>之后我不会再针对这件事产出更多延伸内容。</p>
+
+    <div class="ending-quote">家吧的门，依旧为每一个尊重现场的人开着。</div>
+
+    <!-- 证据附录 -->
+    <div class="evidence-appendix">
+      <h2 class="section-title">证据附录</h2>
+
+      <span class="placeholder-note">此处插入全部证据截图——未截断聊天记录、完整时间线、对方文章原图、本人原话证据、打码截图对比、头像封面取证、监控截图等，按时间线排列</span>
+
+      <div class="evidence-note">
+        （本文所有事实性陈述均可在原始聊天记录、监控录像、对方公开发布的文章中核对。配图均为原始截图原样呈现，仅对无关第三方头像与昵称做马赛克处理，对话内容一字未改。）
+      </div>
+    </div>
+
+    <!-- 底部品牌 -->
+    <div class="footer-brand">
+      <div class="brand-colors">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="brand-logo-text">JAHBAR</div>
+      <div class="brand-slogan">和平 · 尊重 · 有爱</div>
+      <div class="brand-location">成都 · 十九年（2007 — 至今）</div>
+      <div class="copyright">© JAHBAR 家吧 · 保留所有权利</div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
